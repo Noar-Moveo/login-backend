@@ -9,7 +9,7 @@ router.post("/signup", signup);
 
 router.get("/", async (Request: Request, Response: Response) => {
   Response.send({
-    message: "Hello",
+    message: "Hello World",
   });
 });
 
