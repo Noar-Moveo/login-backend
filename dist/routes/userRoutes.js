@@ -19,7 +19,7 @@ const router = express_1.default.Router();
 router.post("/signup", userController_1.signup);
 router.get("/", (Request, Response) => __awaiter(void 0, void 0, void 0, function* () {
     Response.send({
-        message: "Hello",
+        message: "Hello World",
     });
 }));
 exports.default = router;

@@ -3,6 +3,8 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cors from "cors";
 import winston from "winston";
+import dotenv from "dotenv";
+dotenv.config();
 import "winston-mongodb";
 import userRoutes from "./routes/userRoutes";
 import otpRoutes from "./routes/otpRoutes";

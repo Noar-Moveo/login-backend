@@ -15,10 +15,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.verifyOtp = exports.sendOtp = void 0;
 const twilio_1 = __importDefault(require("twilio"));
 const winston_1 = __importDefault(require("winston"));
-const accountSid = process.env.TWILIO_ACCOUNT_SID || "ACbf8f3201f057571cdcc6e7f07dd5b937";
-const authToken = process.env.TWILIO_AUTH_TOKEN || "9a04a4cab8ec35e71003a78727a6789c";
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = (0, twilio_1.default)(accountSid, authToken);
-const messagingServiceSid = "MGb403fd71f133783d93f75c7f1599ab67";
+const messagingServiceSid = process.env.TWILIO_VERIFY_SERVICE_SID;
 let otpStorage = {};
 const sendOtp = (phoneNumber) => __awaiter(void 0, void 0, void 0, function* () {
     const otp = Math.floor(1000 + Math.random() * 9000).toString();

@@ -8,6 +8,8 @@ const body_parser_1 = __importDefault(require("body-parser"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const cors_1 = __importDefault(require("cors"));
 const winston_1 = __importDefault(require("winston"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 require("winston-mongodb");
 const userRoutes_1 = __importDefault(require("./routes/userRoutes"));
 const otpRoutes_1 = __importDefault(require("./routes/otpRoutes"));
