@@ -1,0 +1,34 @@
+name: deploy - development
+on:
+  - workflow_dispatch
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Branch name
+        run: echo running on branch ${GITHUB_REF##*/}
+
+      - name: Extract branch name
+        shell: bash
+        run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+        id: extract_branch
+
+      - name: SSH into server and deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: 13.48.136.194
+          username: ubuntu
+          key: ${{ secrets.PEM_FILE_DEV }}
+          script: |
+            cd ~/back
+            git fetch
+            git checkout ${{ steps.extract_branch.outputs.branch }}
+            git pull
+            npm install
+            npm run build
+            pm2 reload server
+            pm2 status
