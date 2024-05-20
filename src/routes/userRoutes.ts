@@ -1,10 +1,9 @@
 import express from "express";
 import { signup } from "../controllers/userController";
-import { sendOtp, verifyOtp } from "../services/otpService";
-import { Err } from "joi";
 
 const router = express.Router();
 
+// Route for user signup
 router.post("/signup", signup);
 
 export default router;

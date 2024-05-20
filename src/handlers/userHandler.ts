@@ -25,9 +25,10 @@ export const signup = async (userData: any) => {
 
   const result = await newUser.save();
 
-  const token = jwt.sign({ email: result.email, id: result._id }, "test", {
-    expiresIn: "1h",
-  });
+  // const token = jwt.sign({ email: result.email, id: result._id }, "test", {
+  //   expiresIn: "1h",
+  // });
 
-  return { result, token };
+  //return { result, token };
+  return { result };
 };
