@@ -55,22 +55,3 @@ const signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.signup = signup;
-// export const verifyOtp = async (req: Request, res: Response) => {
-//   try {
-//     const { sentOtp, receivedOtp } = req.body;
-//     const isValid = verifyOtpService(sentOtp, receivedOtp);
-//     if (isValid) {
-//       res.status(200).json({ message: "OTP verified successfully" });
-//     } else {
-//       res.status(400).json({ message: "Invalid OTP" });
-//     }
-//   } catch (error) {
-//     if (error instanceof Error) {
-//       console.error("Error verifying OTP:", error);
-//       res.status(500).json({ message: error.message });
-//     } else {
-//       console.error("Unknown error verifying OTP:", error);
-//       res.status(500).json({ message: "An unknown error occurred." });
-//     }
-//   }
-// };

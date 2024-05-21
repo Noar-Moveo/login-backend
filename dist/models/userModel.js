@@ -30,22 +30,24 @@ const User = mongoose_1.default.model("User", userSchema);
 exports.User = User;
 function validateUser(user) {
     const schema = joi_1.default.object({
-        firstName: joi_1.default.string().min(1).max(50).required(),
-        lastName: joi_1.default.string().min(1).max(50).required(),
-        companyName: joi_1.default.string().min(1).max(50).required(),
+        firstName: joi_1.default.string().regex(/^[a-zA-Z]{1,50}$/).required(),
+        lastName: joi_1.default.string().regex(/^[a-zA-Z]{1,50}$/).required(),
+        companyName: joi_1.default.string().regex(/^[a-zA-Z0-9]{1,50}$/).required(),
         email: joi_1.default.string().email().required(),
-        phoneNumber: joi_1.default.string().min(8).max(15).required(),
+        phoneNumber: joi_1.default.string()
+            .regex(/^(50|52|53|54|55|57|58)\d{7}$/)
+            .required(),
         dateOfBirth: joi_1.default.date().required(),
         password: joi_1.default.string().min(6).required(),
         bank: joi_1.default.string().allow(""),
-        branch: joi_1.default.string().allow(""),
-        accountNumber: joi_1.default.string().allow(""),
-        creditCardName: joi_1.default.string().allow(""),
-        creditCardNumber: joi_1.default.string().allow(""),
+        branch: joi_1.default.string().regex(/^\d{3}$/).allow(""),
+        accountNumber: joi_1.default.string().regex(/^\d{1,9}$/).allow(""),
+        creditCardName: joi_1.default.string().regex(/^[a-zA-Z]{1,50}$/).allow(""),
+        creditCardNumber: joi_1.default.string().regex(/^\d{16}$/).allow(""),
         expirationDate: joi_1.default.string().allow(""),
-        cvv: joi_1.default.string().allow(""),
+        cvv: joi_1.default.string().regex(/^\d{3}$/).allow(""),
         agreedToTerms: joi_1.default.boolean().default(false),
-        businessID: joi_1.default.string().min(1).max(50).required(),
+        businessID: joi_1.default.string().regex(/^\d{8,9}$/).required(),
     });
     return schema.validate(user);
 }
