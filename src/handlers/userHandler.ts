@@ -3,9 +3,10 @@ import jwt from "jsonwebtoken";
 import { User, validateUser } from "../models/userModel";
 import winston from "winston";
 import nodemailer from "nodemailer";
+import sendEmail from "../sendEmail";
 
 const JWT_SECRET = "MYSECRECTKEY";
-const RESET_PASSWORD_SECRET = "MYRESETSECRETKEY"; // Secret key for password reset tokens
+const RESET_PASSWORD_SECRET = "MYRESETSECRETKEY";
 
 interface UserData {
   email: string;
@@ -72,22 +73,12 @@ export const sendResetLink = async (email: string) => {
     }
   );
 
-  const transporter = nodemailer.createTransport({
-    service: "Gmail",
-    auth: {
-      user: "noa2308r@gmail.com",
-      pass: "Noa2308rmail",
-    },
-  });
+  //const resetLink = `http://localhost:5173/reset-password?token=${token}`;
+  const resetLink = `http://13.48.136.194//reset-password?token=${token}`;
+  const subject = "Password Reset";
+  const text = `Please use the following link to reset your password: ${resetLink}`;
 
-  const mailOptions = {
-    from: "noa2308r@gmail.com",
-    to: user.email,
-    subject: "Password Reset",
-    text: `Please use the following link to reset your password: http://localhost:3000/reset-password?token=${token}`,
-  };
-
-  await transporter.sendMail(mailOptions);
+  await sendEmail(user.email, subject, text);
 };
 
 export const updatePassword = async (token: string, newPassword: string) => {

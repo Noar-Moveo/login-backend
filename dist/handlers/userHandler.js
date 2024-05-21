@@ -17,9 +17,9 @@ const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const userModel_1 = require("../models/userModel");
 const winston_1 = __importDefault(require("winston"));
-const nodemailer_1 = __importDefault(require("nodemailer"));
+const sendEmail_1 = __importDefault(require("../sendEmail"));
 const JWT_SECRET = "MYSECRECTKEY";
-const RESET_PASSWORD_SECRET = "MYRESETSECRETKEY"; // Secret key for password reset tokens
+const RESET_PASSWORD_SECRET = "MYRESETSECRETKEY";
 const signup = (userData) => __awaiter(void 0, void 0, void 0, function* () {
     const { error } = (0, userModel_1.validateUser)(userData);
     if (error) {
@@ -64,20 +64,10 @@ const sendResetLink = (email) => __awaiter(void 0, void 0, void 0, function* () 
     const token = jsonwebtoken_1.default.sign({ email: user.email, id: user._id }, RESET_PASSWORD_SECRET, {
         expiresIn: "1h",
     });
-    const transporter = nodemailer_1.default.createTransport({
-        service: "Gmail",
-        auth: {
-            user: "noa2308r@gmail.com",
-            pass: "Noa2308rmail",
-        },
-    });
-    const mailOptions = {
-        from: "noa2308r@gmail.com",
-        to: user.email,
-        subject: "Password Reset",
-        text: `Please use the following link to reset your password: http://localhost:3000/reset-password?token=${token}`,
-    };
-    yield transporter.sendMail(mailOptions);
+    const resetLink = `http://localhost:5173/reset-password?token=${token}`;
+    const subject = "Password Reset";
+    const text = `Please use the following link to reset your password: ${resetLink}`;
+    yield (0, sendEmail_1.default)(user.email, subject, text);
 });
 exports.sendResetLink = sendResetLink;
 const updatePassword = (token, newPassword) => __awaiter(void 0, void 0, void 0, function* () {
