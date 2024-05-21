@@ -32,21 +32,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.login = exports.signup = void 0;
+exports.resetPassword = exports.forgotPassword = exports.login = exports.signup = void 0;
 const userHandler = __importStar(require("../handlers/userHandler"));
 const signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const result = yield userHandler.signup(req.body);
         res.status(201).json(result);
-        // const { phoneNumber } = req.body;
-        // const otp = await sendOtpService(phoneNumber);
     }
     catch (error) {
         if (error instanceof Error) {
             console.error("Signup error:", error);
             res.status(500).json({ message: error.message });
-            //   console.error("Error sending OTP:", error);
-            //   res.status(500).json({ message: error.message });
         }
         else {
             console.error("Signup error:", error);
@@ -70,3 +66,41 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.login = login;
+const forgotPassword = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { email } = req.body;
+    try {
+        yield userHandler.sendResetLink(email);
+        res
+            .status(200)
+            .json({ message: "Password reset link sent to your email." });
+    }
+    catch (error) {
+        if (error instanceof Error) {
+            res.status(500).json({ message: error.message });
+        }
+        else {
+            res
+                .status(500)
+                .json({ message: "Failed to send reset link. Please try again." });
+        }
+    }
+});
+exports.forgotPassword = forgotPassword;
+const resetPassword = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { token, newPassword } = req.body;
+    try {
+        yield userHandler.updatePassword(token, newPassword);
+        res.status(200).json({ message: "Password updated successfully." });
+    }
+    catch (error) {
+        if (error instanceof Error) {
+            res.status(500).json({ message: error.message });
+        }
+        else {
+            res
+                .status(500)
+                .json({ message: "Failed to update password. Please try again." });
+        }
+    }
+});
+exports.resetPassword = resetPassword;

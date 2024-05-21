@@ -1,17 +1,16 @@
 import express from "express";
-import { signup, login } from "../controllers/userController";
-import { Request, Response } from "express";
+import {
+  signup,
+  login,
+  forgotPassword,
+  resetPassword,
+} from "../controllers/userController";
 
 const router = express.Router();
 
-// Route for user signup
 router.post("/signup", signup);
 router.post("/login", login);
-
-router.get("/", async (Request: Request, Response: Response) => {
-  Response.send({
-    message: "Hello World",
-  });
-});
+router.post("/forgot-password", forgotPassword);
+router.post("/reset-password", resetPassword);
 
 export default router;
