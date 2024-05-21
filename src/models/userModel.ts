@@ -52,22 +52,24 @@ const User = mongoose.model("User", userSchema);
 
 function validateUser(user: UserType) {
   const schema = Joi.object({
-    firstName: Joi.string().min(1).max(50).required(),
-    lastName: Joi.string().min(1).max(50).required(),
-    companyName: Joi.string().min(1).max(50).required(),
+    firstName: Joi.string().regex(/^[a-zA-Z]{1,50}$/).required(),
+    lastName: Joi.string().regex(/^[a-zA-Z]{1,50}$/).required(),
+    companyName: Joi.string().regex(/^[a-zA-Z0-9]{1,50}$/).required(),
     email: Joi.string().email().required(),
-    phoneNumber: Joi.string().min(8).max(15).required(),
+    phoneNumber: Joi.string()
+      .regex(/^(50|52|53|54|55|57|58)\d{7}$/)
+      .required(),
     dateOfBirth: Joi.date().required(),
     password: Joi.string().min(6).required(),
     bank: Joi.string().allow(""),
-    branch: Joi.string().allow(""),
-    accountNumber: Joi.string().allow(""),
-    creditCardName: Joi.string().allow(""),
-    creditCardNumber: Joi.string().allow(""),
+    branch: Joi.string().regex(/^\d{3}$/).allow(""),
+    accountNumber: Joi.string().regex(/^\d{1,9}$/).allow(""),
+    creditCardName: Joi.string().regex(/^[a-zA-Z]{1,50}$/).allow(""),
+    creditCardNumber: Joi.string().regex(/^\d{16}$/).allow(""),
     expirationDate: Joi.string().allow(""),
-    cvv: Joi.string().allow(""),
+    cvv: Joi.string().regex(/^\d{3}$/).allow(""),
     agreedToTerms: Joi.boolean().default(false),
-    businessID: Joi.string().min(1).max(50).required(),
+    businessID: Joi.string().regex(/^\d{8,9}$/).required(),
   });
 
   return schema.validate(user);
