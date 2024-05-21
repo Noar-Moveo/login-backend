@@ -17,6 +17,7 @@ const userController_1 = require("../controllers/userController");
 const router = express_1.default.Router();
 // Route for user signup
 router.post("/signup", userController_1.signup);
+router.post("/login", userController_1.login);
 router.get("/", (Request, Response) => __awaiter(void 0, void 0, void 0, function* () {
     Response.send({
         message: "Hello World",

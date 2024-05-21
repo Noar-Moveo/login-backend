@@ -12,10 +12,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.signup = void 0;
+exports.login = exports.signup = void 0;
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const userModel_1 = require("../models/userModel");
 const winston_1 = __importDefault(require("winston"));
+const JWT_SECRET = "MYSECRECTKEY";
 const signup = (userData) => __awaiter(void 0, void 0, void 0, function* () {
     const { error } = (0, userModel_1.validateUser)(userData);
     if (error) {
@@ -37,3 +39,22 @@ const signup = (userData) => __awaiter(void 0, void 0, void 0, function* () {
     return { result };
 });
 exports.signup = signup;
+const login = (userData) => __awaiter(void 0, void 0, void 0, function* () {
+    const { email, password } = userData;
+    if (!email || !password) {
+        throw new Error("הכנס אימייל וסיסמה");
+    }
+    const user = yield userModel_1.User.findOne({ email });
+    if (!user) {
+        throw new Error("אין חשבון קיים לכתובת מייל זו");
+    }
+    const isPasswordCorrect = yield bcryptjs_1.default.compare(password, user.password);
+    if (!isPasswordCorrect) {
+        throw new Error("מייל או סיסמה לא תקינים");
+    }
+    const token = jsonwebtoken_1.default.sign({ email: user.email, id: user._id }, JWT_SECRET, {
+        expiresIn: "1h",
+    });
+    return { result: user, token };
+});
+exports.login = login;

@@ -32,7 +32,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.signup = void 0;
+exports.login = exports.signup = void 0;
 const userHandler = __importStar(require("../handlers/userHandler"));
 const signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -55,3 +55,18 @@ const signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.signup = signup;
+const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const result = yield userHandler.login(req.body);
+        res.status(200).json(result);
+    }
+    catch (error) {
+        if (error instanceof Error) {
+            res.status(400).json({ message: error.message });
+        }
+        else {
+            res.status(500).json({ message: "An unknown error occurred." });
+        }
+    }
+});
+exports.login = login;

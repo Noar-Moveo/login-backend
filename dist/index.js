@@ -34,7 +34,12 @@ const logger = winston_1.default.createLogger({
     ],
 });
 const corsOptions = {
-    origin: "http://localhost:5173",
+    origin: [
+        "http://localhost:5173",
+        "http://13.48.136.194",
+        "*",
+        "http://localhost:5174",
+    ],
     optionsSuccessStatus: 200,
 };
 app.use((0, cors_1.default)(corsOptions));
