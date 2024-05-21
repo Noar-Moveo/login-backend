@@ -37,10 +37,10 @@ const corsOptions = {
     origin: [
         "http://localhost:5173",
         "http://13.48.136.194",
-        "*",
         "http://localhost:5174",
     ],
     optionsSuccessStatus: 200,
+    credentials: true,
 };
 app.use((0, cors_1.default)(corsOptions));
 app.use(body_parser_1.default.json());

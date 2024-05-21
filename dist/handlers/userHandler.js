@@ -65,6 +65,7 @@ const sendResetLink = (email) => __awaiter(void 0, void 0, void 0, function* () 
         expiresIn: "1h",
     });
     const resetLink = `http://localhost:5173/reset-password?token=${token}`;
+    //const resetLink = `http://13.48.136.194//reset-password?token=${token}`;
     const subject = "Password Reset";
     const text = `Please use the following link to reset your password: ${resetLink}`;
     yield (0, sendEmail_1.default)(user.email, subject, text);
