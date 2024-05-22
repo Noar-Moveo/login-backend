@@ -35,16 +35,12 @@ export const forgotPassword = async (req: Request, res: Response) => {
   const { email } = req.body;
   try {
     await userHandler.sendResetLink(email);
-    res
-      .status(200)
-      .json({ message: "Password reset link sent to your email." });
+    res.status(200).json({ message: "לינק לאיתחול סיסמה נשלח למייל" });
   } catch (error) {
     if (error instanceof Error) {
       res.status(500).json({ message: error.message });
     } else {
-      res
-        .status(500)
-        .json({ message: "Failed to send reset link. Please try again." });
+      res.status(500).json({ message: "שגיאה" });
     }
   }
 };
@@ -53,14 +49,12 @@ export const resetPassword = async (req: Request, res: Response) => {
   const { token, newPassword } = req.body;
   try {
     await userHandler.updatePassword(token, newPassword);
-    res.status(200).json({ message: "Password updated successfully." });
+    res.status(200).json({ message: "סיסמה עודכנה בהצלחה" });
   } catch (error) {
     if (error instanceof Error) {
       res.status(500).json({ message: error.message });
     } else {
-      res
-        .status(500)
-        .json({ message: "Failed to update password. Please try again." });
+      res.status(500).json({ message: "שגיאה" });
     }
   }
 };
