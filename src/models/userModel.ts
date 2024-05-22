@@ -33,17 +33,17 @@ const userSchema = new mongoose.Schema({
   firstName: {
     type: String,
     required: true,
-    match: /^[a-zA-Z]{1,50}$/,
+    match: /^[\u0590-\u05FFa-zA-Z]{1,50}$/,
   },
   lastName: {
     type: String,
     required: true,
-    match: /^[a-zA-Z]{1,50}$/,
+    match: /^[\u0590-\u05FFa-zA-Z]{1,50}$/,
   },
   companyName: {
     type: String,
     required: true,
-    match: /^[a-zA-Z0-9]{1,50}$/,
+    match: /^[\u0590-\u05FFa-zA-Z0-9]{1,50}$/,
   },
   email: {
     type: String,
@@ -78,7 +78,7 @@ const userSchema = new mongoose.Schema({
   },
   creditCardName: {
     type: String,
-    match: /^[a-zA-Z]{1,50}$/,
+    match: /^[\u0590-\u05FFa-zA-Z]{1,50}$/,
   },
   creditCardNumber: {
     type: String,
@@ -107,13 +107,13 @@ const User = mongoose.model("User", userSchema);
 function validateUser(user: UserType) {
   const schema = Joi.object({
     firstName: Joi.string()
-      .regex(/^[a-zA-Z]{1,50}$/)
+      .regex(/^[\u0590-\u05FFa-zA-Z]{1,50}$/)
       .required(),
     lastName: Joi.string()
-      .regex(/^[a-zA-Z]{1,50}$/)
+      .regex(/^[\u0590-\u05FFa-zA-Z]{1,50}$/)
       .required(),
     companyName: Joi.string()
-      .regex(/^[a-zA-Z0-9]{1,50}$/)
+      .regex(/^[\u0590-\u05FFa-zA-Z0-9]{1,50}$/)
       .required(),
     email: Joi.string().email().required(),
     phoneNumber: Joi.string()
@@ -129,7 +129,7 @@ function validateUser(user: UserType) {
       .regex(/^\d{1,9}$/)
       .allow(""),
     creditCardName: Joi.string()
-      .regex(/^[a-zA-Z]{1,50}$/)
+      .regex(/^[\u0590-\u05FFa-zA-Z]{1,50}$/)
       .allow(""),
     creditCardNumber: Joi.string()
       .regex(/^\d{16}$/)
