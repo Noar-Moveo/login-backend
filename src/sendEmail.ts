@@ -13,7 +13,7 @@ const sendEmail = async (
       secure: true,
       auth: {
         user: "noa2308r@gmail.com",
-        pass: "yiuf yvsk wlht urfs", // Replace with your generated app password
+        pass: "yiuf yvsk wlht urfs",
       },
     });
 
